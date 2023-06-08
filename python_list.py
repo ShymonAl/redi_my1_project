@@ -43,12 +43,27 @@ database = {
         "Тривожні люди"
     ],
 }
-# Запитуємо у користувача книжковий жанр
-genre = input("Який книжковий жанр вас цікавить? ")
-# Перевіряємо, чи жанр є у базі книг
-if genre in database:
-    print("Список книг у жанрі", genre, ":")
-    for book in database[genre]:
-        print(book)
-else:
-    print("Жанр", genre, "не знайдений у базі даних.")
+# Головний цикл програми
+while True:
+    # Виводимо доступні дії
+    print("Виберіть дію:")
+    print("1. Вивести список всіх доступних книг")
+    print("2. Додати книгу")
+    print("3. Видалити книгу")
+    print("4. Вийти")
+
+    # Користувач вводить номер дії
+    choice = int(input("Ваш вибір: "))
+
+    if choice == 1:  # Якщо обрана дія - вивести список всіх доступних книг
+        print("Список всіх доступних книг:")
+        for genre, books in database.items():
+            print(genre + ":")
+            for i, book in enumerate(books, start=1):
+                print(f"{i}. {book}")
+            print()
+    elif choice == 4:  # Якщо обрана дія - вийти
+        print("До побачення!")
+        break
+    else:
+        print("Некоректний вибір дії.")
