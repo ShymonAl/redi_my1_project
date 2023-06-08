@@ -64,6 +64,18 @@ def add_book(genre, book):
     else:
         print(f"Жанр '{genre}' не знайдений у базі даних.")
 
+# Функція для пошуку книги за назвою
+def search_book_by_title(title):
+    found = False
+    print(f"Результати пошуку за назвою '{title}':")
+    for genre, books_list in books.items():
+        for book in books_list:
+            if title.lower() in book.lower():
+                print(f"{genre}: {book}")
+                found = True
+    if not found:
+        print("Книга не знайдена.")
+
 # Функція для видалення книги з бази даних
 def delete_book(genre, book):
     if genre in books and book in books[genre]:
@@ -100,8 +112,8 @@ while True:
     print("1. Вивести список всіх доступних книг")
     print("2. Додати книгу")
     print("3. Видалити книгу")
-    print("4. Вийти")
-
+    print ("4. Пошук за назвою")
+    print("5. Вийти")
     # Користувач вводить номер дії
     choice = input("Ваш вибір: ")
 
@@ -127,10 +139,14 @@ while True:
             delete_book(genre, book)  # Викликаємо функцію для видалення книги з бази
         else:
             print("Некоректний жанр.")
-    elif choice == '4':  # Якщо обрана дія - вийти
+
+    elif choice == '4':  # Якщо обрана дія - пошук книги за назвою
+        title = input("Введіть назву книги: ")
+        search_book_by_title(title)  # Викликаємо функцію для пошуку книги за назвою
+
+    elif choice == '5':  # Якщо обрана дія - вийти
         print("До побачення!")
         break
     else:
         print("Некоректний вибір дії.")
-
     print()  # Розділюємо вивід дій від наступного виводу
