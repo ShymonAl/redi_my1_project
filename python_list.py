@@ -43,6 +43,23 @@ database = {
         "Тривожні люди"
     ],
 }
+
+# Функція для додавання книги до бази даних
+def add_book(genre, book):
+    if genre in database:
+        database[genre].append(book)
+    else:
+        database[genre] = [book]
+    print(f"Книга '{book}' додана у жанр '{genre}'.")
+
+# Функція для видалення книги з бази даних
+def delete_book(genre, book):
+    if genre in database and book in database[genre]:
+        database[genre].remove(book)
+        print(f"Книга '{book}' видалена з жанру '{genre}'.")
+    else:
+        print(f"Книга '{book}' не знайдена у жанрі '{genre}'.")
+
 # Головний цикл програми
 while True:
     # Виводимо доступні дії
@@ -62,8 +79,13 @@ while True:
             for i, book in enumerate(books, start=1):
                 print(f"{i}. {book}")
             print()
+    elif choice == 2:  # Якщо обрана дія - додати книгу
+        genre = input("Введіть жанр книги: ")
+        book = input("Введіть назву книги: ")
+        add_book(genre, book)  # Викликаємо функцію для додавання книги до бази
     elif choice == 4:  # Якщо обрана дія - вийти
         print("До побачення!")
         break
     else:
         print("Некоректний вибір дії.")
+    print()  # Розділюємо вивід дій від наступного виводу
