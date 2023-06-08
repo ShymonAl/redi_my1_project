@@ -1,5 +1,14 @@
-#створюємо базу книг
+# створюємо базу книг
 database = {
+    1: "Книги для відпочинку",
+    2: "Мотиваційні",
+    3: "Детектив",
+    4: "Триллери",
+    5: "Історичні",
+    6: "Психологічні"
+}
+
+books = {
     "Книги для відпочинку": [
         "Зелене світло",
         "Кульбабове вино",
@@ -46,19 +55,43 @@ database = {
 
 # Функція для додавання книги до бази даних
 def add_book(genre, book):
-    if genre in database:
-        database[genre].append(book)
+    if genre in books:
+        if book not in books[genre]:
+            books[genre].append(book)
+            print(f"Книга '{book}' додана у жанр '{genre}'.")
+        else:
+            print(f"Книга '{book}' вже присутня у жанрі '{genre}'.")
     else:
-        database[genre] = [book]
-    print(f"Книга '{book}' додана у жанр '{genre}'.")
+        print(f"Жанр '{genre}' не знайдений у базі даних.")
 
 # Функція для видалення книги з бази даних
 def delete_book(genre, book):
-    if genre in database and book in database[genre]:
-        database[genre].remove(book)
+    if genre in books and book in books[genre]:
+        books[genre].remove(book)
         print(f"Книга '{book}' видалена з жанру '{genre}'.")
     else:
         print(f"Книга '{book}' не знайдена у жанрі '{genre}'.")
+
+# Функція для виведення списку книг у жанрі
+def print_books(genre):
+    if genre in books:
+        print("Список книг у жанрі", genre, ":")
+        for i, book in enumerate(books[genre], start=1):
+            print(f"{i}. {book}")
+    else:
+        print("Жанр", genre, "не знайдений у базі даних.")
+
+# Функція для отримання жанру за назвою або номером
+def get_genre(choice):
+    if choice.isdigit():
+        genre_num = int(choice)
+        if genre_num in database:
+            return database[genre_num]
+    else:
+        for genre_num, genre_name in database.items():
+            if genre_name.lower() == choice.lower():
+                return genre_name
+    return None
 
 # Головний цикл програми
 while True:
@@ -70,22 +103,34 @@ while True:
     print("4. Вийти")
 
     # Користувач вводить номер дії
-    choice = int(input("Ваш вибір: "))
+    choice = input("Ваш вибір: ")
 
-    if choice == 1:  # Якщо обрана дія - вивести список всіх доступних книг
+    if choice == '1':  # Якщо обрана дія - вивести список всіх доступних книг
         print("Список всіх доступних книг:")
-        for genre, books in database.items():
-            print(genre + ":")
-            for i, book in enumerate(books, start=1):
-                print(f"{i}. {book}")
+        for genre_num, genre_name in database.items():
+            print(f"{genre_num}. {genre_name}:")
+            print_books(genre_name)
             print()
-    elif choice == 2:  # Якщо обрана дія - додати книгу
-        genre = input("Введіть жанр книги: ")
-        book = input("Введіть назву книги: ")
-        add_book(genre, book)  # Викликаємо функцію для додавання книги до бази
-    elif choice == 4:  # Якщо обрана дія - вийти
+    elif choice == '2':  # Якщо обрана дія - додати книгу
+        genre_choice = input("Введіть назву або номер жанру: ")
+        genre = get_genre(genre_choice)
+        if genre:
+            book = input("Введіть назву книги: ")
+            add_book(genre, book)  # Викликаємо функцію для додавання книги до бази
+        else:
+            print("Некоректний жанр.")
+    elif choice == '3':  # Якщо обрана дія - видалити книгу
+        genre_choice = input("Введіть назву або номер жанру: ")
+        genre = get_genre(genre_choice)
+        if genre:
+            book = input("Введіть назву книги: ")
+            delete_book(genre, book)  # Викликаємо функцію для видалення книги з бази
+        else:
+            print("Некоректний жанр.")
+    elif choice == '4':  # Якщо обрана дія - вийти
         print("До побачення!")
         break
     else:
         print("Некоректний вибір дії.")
+
     print()  # Розділюємо вивід дій від наступного виводу
