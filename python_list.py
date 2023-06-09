@@ -7,7 +7,6 @@ database = {
     5: "Історичні",
     6: "Психологічні"
 }
-
 books = {
     "Книги для відпочинку": [
         "Зелене світло",
@@ -52,7 +51,6 @@ books = {
         "Тривожні люди"
     ],
 }
-
 # Функція для додавання книги до бази даних
 def add_book(genre, book):
     if genre in books:
@@ -75,7 +73,6 @@ def search_book_by_title(title):
                 found = True
     if not found:
         print("Книга не знайдена.")
-
 # Функція для видалення книги з бази даних
 def delete_book(genre, book):
     if genre in books and book in books[genre]:
@@ -83,7 +80,6 @@ def delete_book(genre, book):
         print(f"Книга '{book}' видалена з жанру '{genre}'.")
     else:
         print(f"Книга '{book}' не знайдена у жанрі '{genre}'.")
-
 # Функція для виведення списку книг у жанрі
 def print_books(genre):
     if genre in books:
@@ -92,7 +88,6 @@ def print_books(genre):
             print(f"{i}. {book}")
     else:
         print("Жанр", genre, "не знайдений у базі даних.")
-
 # Функція для отримання жанру за назвою або номером
 def get_genre(choice):
     if choice.isdigit():
@@ -104,19 +99,17 @@ def get_genre(choice):
             if genre_name.lower() == choice.lower():
                 return genre_name
     return None
-
 # Головний цикл програми
 while True:
     # Виводимо доступні дії
     print("Виберіть дію:")
-    print("1. Вивести список всіх доступних книг")
+    print("1. Всі книги за жанрами")
     print("2. Додати книгу")
     print("3. Видалити книгу")
     print ("4. Пошук за назвою")
     print("5. Вийти")
     # Користувач вводить номер дії
     choice = input("Ваш вибір: ")
-
     if choice == '1':  # Якщо обрана дія - вивести список всіх доступних книг
         print("Список всіх доступних книг:")
         for genre_num, genre_name in database.items():
@@ -139,11 +132,9 @@ while True:
             delete_book(genre, book)  # Викликаємо функцію для видалення книги з бази
         else:
             print("Некоректний жанр.")
-
     elif choice == '4':  # Якщо обрана дія - пошук книги за назвою
         title = input("Введіть назву книги: ")
         search_book_by_title(title)  # Викликаємо функцію для пошуку книги за назвою
-
     elif choice == '5':  # Якщо обрана дія - вийти
         print("До побачення!")
         break
